@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet"  th:href="@{../css/cardtext.css}" type="text/css" / media="all">
+</head>
+<body>
+	<section class="printnone">
+		<form th:action="@{test.html}" method="post" enctype="multipart/form-data" >
+			<input type="file" name="test" onchange="previewFile(this);">
+			<br/>
+		</form>
+		
+		<button class="printbutton" onclick="myfun()">印刷</button>
+		<script> type="text/javascript"
+			function myfun(){
+				window.print();
+			}
+		</script>
+		
+		<form method="post" th:action="@{/login/goselect}">
+			<input type="submit" value="メニュー一覧へもどる">
+		</form>
+		 
+		<p>プレビュー</p>
+	</section>
+	
+	<textarea class="text"type="text" name="text" rows="2">
+あけましておめでとうございます。
+今年もよろしくお願いします。</textarea>
+	<img class="preview" id="preview">
+	
+	<script>
+		function previewFile(hoge){
+			var fileData = new FileReader();
+	  	 	fileData.onload = (function() {
+ //id属性が付与されているimgタグのsrc属性に、fileReaderで取得した値の結果を入力することで
+ //プレビュー表示している
+				document.getElementById('preview').src = fileData.result;
+			});
+			fileData.readAsDataURL(hoge.files[0]);
+		}
+	 </script>
+</body>
+</html>

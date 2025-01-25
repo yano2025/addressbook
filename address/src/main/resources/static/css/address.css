@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+
+/*@media screen and (max-width: 900px ){*/
+body{
+	background-color: aquamarine;
+	width: 100%;
+	text-align: center;
+}
+table{
+	margin: auto;
+	background-color: white;
+}
+
+.addresstitle{
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+	color: white;
+	background-color: darkcyan;
+	
+}
+.addresssubtitle{
+	
+}
+.addresminititle{
+	
+}
+
+.backmenu{
+	
+}
+
+.edit{
+		
+}
+
+.editname{
+	
+}
+.editpostno{
+	
+}
+.editaddress{
+	
+}
+.editage{
+	
+}		
+.edittext{
+	
+}
+
+
+.addresslistedit{
+	
+}
+.addresslistdelete{
+	
+}
+.addresslistname{
+	
+}
+.addresslistpostno{
+	
+}
+.addresslistaddress{
+	
+}
+.addresslistage{
+	
+}
+.addresslisttext{
+	
+}

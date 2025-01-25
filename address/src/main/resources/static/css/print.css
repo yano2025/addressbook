@@ -1,0 +1,204 @@
+@charset "UTF-8";
+
+
+body{
+	margin: 0;
+	width: 760px;
+	height: auto;
+	display:  flex;
+	flex-direction: column;
+	background-image: url('../image/hagaki_kansei.jpg');
+	background-repeat: no-repeat;
+	background-size: 784px;
+	background-position: -30px -30px ;
+	text-align: left;
+}
+
+p{
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+/*
+top
+*/
+
+.top{
+	display: flex;
+}
+
+
+.postno{
+	color: #333;
+	font-size: 60px;
+	margin: 0px 0 0 323px;
+	padding: 53px 0 0 0;
+	letter-spacing: 18px;
+}
+	
+.printbutton{
+	display: inline-flex;
+	color: #fff;
+	font-size: 45px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	box-shadow: 5px 5px 0 #bbb;
+	margin: 10px 10px 0 10px;
+	padding: 35px 20px;
+	border-radius: 5px;
+	background-color: #333;
+	cursor: pointer;
+	white-space: pre;
+}
+
+.backbutton{
+	display: inline-flex;
+	color: #fff;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	box-shadow: 5px 5px 0 #bbb;
+	margin: 10px 10px 0 10px;
+	padding: 52px 20px;
+	border-radius: 5px;
+	background-color: #333;
+	cursor: pointer;
+}
+
+
+/*
+center
+*/
+
+.center{
+	display: flex;
+	height: 773px;
+}
+
+.myname{
+	display: inline;
+	writing-mode: vertical-rl;
+	text-orientation: upright;	
+	font-size: 38px;
+	margin: 550px 10px 0 10px;
+	
+	}
+
+.myaddress{
+	display: inline;
+	writing-mode: vertical-rl;
+	text-orientation: upright;	
+	font-size: 32px;
+	margin: 250px 20px 0;
+}
+
+.name{
+	display: inline;
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+	vertical-align: top;	
+	font-size: 72px;
+	margin: 0 138px 0;
+}
+.address{
+	display: inline;
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+	vertical-align: top;	
+	font-size: 42px;
+	margin: 0 16px 0;
+}
+
+/*
+bottom
+*/
+.mypostno{
+	font-size: 48px;
+	margin: 0 13px 84px;
+	padding: 0 0 0px;
+	letter-spacing: 3.5px;
+}
+
+	@media print{
+		.printbutton,.backbutton{
+			display:none;
+		}
+	}
+
+	@page{
+/*		width: 100mm;*/
+/*		height: 148mm;*/
+		margin: auto;
+	}
+	
+/*	}*/
+
+/*	h1{*/
+/*		height: 0px;*/
+/*		font-size: 0px;*/
+		
+/*	}*/
+	
+/*	header{*/
+/*		height: 300px;*/
+/*		margin: 120px 72px 0 auto;*/
+/*		font-size: 72pt;*/
+/*		letter-spacing: 24px;*/
+/*	}*/
+
+/*	div{*/
+/*		display: flex ;*/
+/*	}*/
+	
+/*	main{*/
+/*		height: 1000px;*/
+/*		width: 800px;*/
+/*		margin: 0 220px 0 auto;*/
+/*		flex:1;*/
+/*		writing-mode: vertical-rl;*/
+/*		text-orientation: upright;*/
+/*		line-height: 100px;*/
+/*		font-size: 72pt;*/
+/*		word-wrap: break-word;*/
+/*	}*/
+	
+/*	nav{*/
+/*		width: 400px ;*/
+/*		margin: 40px 0 0 64px;*/
+/*		line-height: 100px;*/
+/*		font-size: 60pt;*/
+/*	}*/
+	
+/*	aside{*/
+/*		height: 1000px;*/
+/*		width: 150px;*/
+/*		margin: 0 100px 0 0;*/
+/*		writing-mode: vertical-rl;*/
+/*		text-orientation: upright;*/
+/*		line-height: 100px;*/
+/*		font-size: 36pt;*/
+/*		word-wrap: break-word;*/
+/*	}*/
+	
+/*	footer{*/
+/*		height: 10px;*/
+/*	}*/
+/*	p{*/
+/*		height: 620px;*/
+/*		width: 200px;*/
+/*		margin: 500px auto 0 auto;*/
+/*		writing-mode: vertical-rl;*/
+/*		text-orientation: upright;*/
+/*		line-height: 100px;*/
+/*		font-size: 32pt;*/
+/*	}*/
+/*	@media print{*/
+/*		h1,footer{*/
+/*			display:none;*/
+/*		}*/
+/*	}*/
+/*	@page{*/
+/*		margin: 0;*/
+/*	}*/

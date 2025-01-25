@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"  th:href="@{../css/address.css}" type="text/css" />
+<title>住所録アプリ</title>
+</head>
+<body>
+	<h1 class="addresstitle">住所録</h1>	
+	<h2 class="addresssubtitle">住所録編集</h2>
+	
+	<form class="back"  method="POST" th:action="@{/login/goselect}">
+		<input 	class="backmenu" type="submit" value = "メニュー一覧へもどる">				
+	</form>		
+	
+	<h3 class="addresminititle" th:text="${title}">タイトル</h3>
+	<p  th:if="${complete}"th:text="${complete}"style="color:blue"></p>
+
+
+	<form class="edit" method="POST"
+		th:action="${addressForm.newAddress}? @{/address/insert} : @{/address/update}"
+		th:object="${addressForm}">
+			名　　前※<input class="editname" type="text" th:field="*{name}" />
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"style="color:red"></div><br />
+			郵便番号※<input class="editpostno" type="text" th:field="*{postno}" />
+				<div th:if="${#fields.hasErrors('postno')}" th:errors="*{postno}"style="color:red"></div><br /> 		
+			住　　所※<input class="editaddress" type="text" th:field="*{address}" />
+				<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"style="color:red"></div><br />
+			年　　齢　<input class="editage" type="text" th:field="*{age}" />		
+				<div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"style="color:red"></div><br />
+			備　　考　<input class="edittext" type="text" th:field="*{text}" /><br />
+			<input th:if="${id}" type="hidden" th:field="*{id}"/>
+			<input type="submit" value = "登録"/>
+			<input type="reset" value = "クリア"/>		<br />
+			<a>登録する場合は上の項目を入力し、登録ボタンをクリックしてください。<br />
+			※印は入力必須項目<br />
+		注：半角数字7桁"-"を付けずに入力してください</a>	
+	</form>
+	<div th:if="${addressForm.newAddress}" 	style="margin:10px">
+		<h3>住所録一覧</h3>
+		<p th:if="${delcomplete}"th:text="${delcomplete}"style="color:blue"></p>
+		<p th:if="${msg}"th:text="${msg}"style="color:red"></p>
+				
+		<table border="1" th:unless="${#lists.isEmpty(list)}"style="table-layout:fixed;">
+			<tr class="addresslist">
+				<th>編集</th>
+				<th>削除</th>
+<!--				<th>ID</th>-->
+				<th>名前</th>
+				<th>郵便番号</th>
+				<th>住所</th>
+				<th>年齢</th>
+				<th>備考</th>
+			</tr>
+			
+			<tr th:each="obj : ${list}"align="center">
+				<td>
+					<form method="POST" th:action="@{/address/{id}(id=${obj.id})}">
+						<input class="addresslistedit"  type="submit" value="編集">
+					</form>
+				</td>
+				<td>
+					<form method="POST" th:action="@{/address/delete}">
+						<input type="hidden" name="id" th:value="${obj.id}">
+						<input class="addresslistdelete" type="submit" value="削除">
+					</form>
+				</td>				
+<!--				<td th:text="${obj.id}"></td>-->
+				<td class="addresslistname" th:text="${obj.name}"></td>
+				<td class="addresslistpostno"th:text="${obj.postno}"></td>
+				<td class="addresslistaddress"th:text="${obj.address}"></td>
+				<td class="addresslistage"th:text="${obj.age}"></td>				
+				<td class="addresslisttext"th:text="${obj.text}"></td>
+			</tr>
+			
+		</table>
+		<p th:if="${#lists.isEmpty(list)}">登録されている内容はありません。</p>
+	</div>
+	<p th:unless="${addressForm.newAddress}">
+		<a href="#" th:href="@{/address}">住所録編集メニューへもどる</a>
+	</p>
+</body>
+</html>
