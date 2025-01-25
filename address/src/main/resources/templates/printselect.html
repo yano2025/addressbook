@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>住所録アプリ</title>
+<link rel="stylesheet"  th:href="@{../css/select.css}" type="text/css" />
+</head>
+<body>
+
+	<h1>住所録</h1>
+	<h2>宛名印刷一覧</h2>
+	<form method="POST" th:action="@{/login/goselect}">
+		<input type="submit" value = "メニュー一覧へもどる">				
+	</form>	<br />
+		<table border="1" th:unless="${#lists.isEmpty(list)}"style="table-layout:fixed;">
+			<tr>
+				<th>印刷</th>
+				<th>名前</th>
+				<th>郵便番号</th>
+				<th>住所</th>
+				<th>年齢</th>
+				<th>備考</th>
+			</tr>
+			
+			<tr th:each="obj : ${list}"align="center">
+				<td>
+					<form method="POST" th:action="@{/print/print{id}(id=${obj.id})}">
+						<input type="submit" value="印刷">
+					</form>
+				</td>
+				<td th:text="${obj.name}"></td>
+				<td th:text="${obj.postno}"></td>
+				<td th:text="${obj.address}"></td>
+				<td th:text="${obj.age}"></td>				
+				<td th:text="${obj.text}"></td>
+			</tr>
+			
+		</table>
+		
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"  th:href="@{../css/select.css}" type="text/css" />
+<title>住所録アプリ</title>
+</head>
+<body>
+	<header>
+		<a th:href="@{/login}">ログイン画面へ</a>
+	</header>
+	<h1>住所録</h1>	
+	<h3 th:text="${title}">タイトル</h3>	
+	<p  th:if="${complete}"th:text="${complete}"style="color:blue"></p>
+	<nav th:unless="${loginForm.newSelect}">
+		<h3>メニュー一覧</h3>
+		<form method="post"	th:action="@{/address}">
+			<input type="submit" value="住所録編集"/>
+			宛先情報の編集はこちらから	<br />
+		</form>
+		<br />
+		<form method="post"	th:action="@{/print}">
+			<input type="submit" value="年賀状宛名印刷"/>
+			年賀状宛名印刷はこちらから	<br />
+		</form>	
+		<br />	
+		<form method="post"	th:action="@{/print/cardtext}">
+			<input type="submit" value="年賀状文面印刷"/>
+			年賀状文面印刷はこちらから	<br />
+		</form>
+		<hr>
+		<h3>ユーザー（送り元）情報</h3>
+		
+		<table border="1" th:unless="${#lists.isEmpty(list)}"style="table-layout:fixed;">
+			<tr>
+				<th>編集</th>
+<!--				<th>ＩＤ</th>-->
+				<th>ユーザーＩＤ</th>
+				<th>パスワード</th>
+				<th>名前</th>
+				<th>郵便番号</th>
+				<th>住所</th>
+			</tr>
+			<tr th:each="obj : ${list}"align="center">
+				<td>
+					<form method="get" th:action="@{/login/{id}(id=${obj.loginid})}">
+						<input type="submit" value="編集">
+					</form>
+				</td>	
+<!--				<td th:text="${obj.loginid}"></td>-->
+				<td th:text="${obj.username}"></td>
+				<td th:password="${obj.pass}">****</td>
+				<td th:text="${obj.myname}"></td>
+				<td th:text="${obj.mypostno}"></td>				
+				<td th:text="${obj.myaddress}"></td>
+			</tr>
+		</table>
+	</nav>
+	<article th:if="${loginForm.newSelect}"	style="margin:10px">
+		<form method="POST" th:action="@{/login/update}" th:object="${loginForm}">
+			ユーザーＩＤ　<input type="text" th:field="*{username}" />
+			<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"style="color:red"></div><br />
+			パスワード　　<input type="password" th:field="*{pass}" />
+			<div th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"style="color:red"></div><br /> 		
+			名前　　　　　<input type="text" th:field="*{myname}" />
+			<div th:if="${#fields.hasErrors('myname')}" th:errors="*{myname}"style="color:red"></div><br />
+			郵便番号　　　<input type="text" th:field="*{mypostno}" />		
+			<div th:if="${#fields.hasErrors('mypostno')}" th:errors="*{mypostno}"style="color:red"></div><br />
+			住所　　　　　<input type="text" th:field="*{myaddress}" /><br /><br />
+			<input th:if="${loginid}" type="hidden" th:field="*{loginid}"/>
+			<input type="submit" value = "登録"/>
+			<input type="reset" value = "クリア"/>		<br />
+			<p>登録する場合は上の項目を入力し、登録ボタンをクリックしてください。<br />
+			郵便番号は-を入力せず、7桁数字を入力してください。</p>	
+		</form>
+		<hr />
+		<form method="post" th:action="@{/login/goselect}">
+			<input type="submit" value="メニュー一覧へもどる">
+		</form>
+	</article>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"  th:href="@{../css/login.css}" type="text/css" />
+<title>住所録アプリ</title>
+</head>
+<body>
+	<h1>住所録</h1>	
+	<h2>ログイン画面</h2>
+	<h3 th:text="${title}">タイトル</h3>
+	<p  th:if="${complete}"th:text="${complete}"style="color:blue"></p>
+	<div th:if="${loginForm.newLogin == 'login'}" style="margin:10px"> 
+	<form method="post"
+	 	th:action="@{/login/logincheck}"
+		th:object="${loginForm}">
+			
+			ユーザーＩＤ　<input type="text" th:field="*{inputuser}" /><br />
+			パスワード　　<input type="password" th:field="*{inputpass}" /><br /><br />
+			<input type="submit" value = "ログイン"/>
+			<input type="reset" value = "クリア"/>	<br />
+	</form>
+	
+	</div>
+			
+	<div th:if="${loginForm.newLogin == 'userset'}" style="margin:10px">
+		<form method="POST"
+			th:action="@{/login/logininsert}"
+			th:object="${loginForm}">
+			<h3>ログイン情報入力</h3>
+			ユーザーＩＤ　<input type = "text" th:field = "*{username}"	pattern="^[a-zA-Z0-9]+$" />
+			<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"style="color:red"></div><br />
+			パスワード　　<input type = "password" th:field = "*{pass}" />
+			<div th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"style="color:red"></div><br /> 
+			<p>注：ログイン情報は入力必須項目です<br />
+				ユーザーＩＤは半角英数字か記号で入力してください。
+			</p>
+			
+			<hr>
+			
+			<h3>送り元情報入力（宛名印刷に使用します）</h3>	<br>
+			名前　　　　　<input type = "text" th:field = "*{myname}" />
+			<div th:if="${#fields.hasErrors('myname')}" th:errors = "*{myname}"style="color:red"></div><br />
+			郵便番号　　　<input type = "text" th:field = "*{mypostno}" />		
+			<div th:if="${#fields.hasErrors('mypostno')}" th:errors = "*{mypostno}"style="color:red"></div><br />
+			住所　　　　　<input type = "text" th:field = "*{myaddress}" />			
+			<div th:if="${#fields.hasErrors('myaddress')}" th:errors = "*{myaddress}"style="color:red"></div><br />
+			<input type="hidden"  	th:field = "*{loginid}" value = 1 />
+			<input type="submit" value = "登録"/>
+			<input type="reset" value = "クリア"/>		<br />
+			<a>入力が完了しましたら、登録ボタンをクリックしてください。<br />
+			注：送り元情報入力は入力必須項目です</a><br />
+		</form>
+	</div>
+</body>
+</html>

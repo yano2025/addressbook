@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+
+body{
+	background-color: aquamarine;
+	
+	width: 100%;
+	text-align: center;
+}
+
+h1{
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+	color: white;
+	background-color: darkcyan;
+}
+
+h2{
+	text-align: center;
+}
+
+h3{
+	text-align: center;
+}
+
+nav{
+	text-align: center;
+}
+
+article{
+	text-align: center;
+	margin: auto;
+}
+
+table{
+	margin: auto;
+	background-color: white;
+}

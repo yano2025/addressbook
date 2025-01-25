@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>印刷画面</title>
+	<link rel="stylesheet"  th:href="@{../css/print.css}" type="text/css" / media="all">
+</head>
+<body>
+<!--	<header></header>-->
+	<section class="top">
+		<div class="postno">
+			<p th:text="${list.postno}"></p>
+		</div>
+		
+		<div>
+			<button class="printbutton" onclick="myfun()">印刷</button>
+			<script> type="text/javascript"
+				function myfun(){
+					window.print();
+				}
+			</script>
+		</div>
+		<form  method="POST" th:action="@{/print}">
+			<input class="backbutton" type="submit" value = "一覧へもどる">				
+		</form>
+	</section>
+	
+	<section class="center">
+		<ul>
+			<li class="myname">
+				<p th:text="${loginlist.myname}"></p>			
+			</li>
+			<li class="myaddress">
+				<address th:text="${loginlist.myaddress}"></address>		
+			</li>
+			<li class="name">
+				<p th:text="${list.name}+'　様'"></p>		
+			</li>	
+			<li class="address">
+				<address th:text="${list.address}"></address>			
+			</li>		
+
+		</ul>
+		
+	</section>
+	
+	<section class="mypostno">
+		<p th:text="${loginlist.mypostno}"></p>
+	</section>
+
+<!--	<footer></footer>-->
+
+</br>
+</html>

@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+
+body{
+	background-color: aquamarine;
+	
+	width: 100%;
+}
+
+h1{
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+	color: white;
+	background-color: darkcyan;
+}
+
+h2{
+	text-align: center;
+}
+
+h3{
+	text-align: center;
+}
+
+div{
+	text-align: center;
+}
