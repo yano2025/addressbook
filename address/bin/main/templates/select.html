@@ -19,8 +19,9 @@
 			宛先情報の編集はこちらから	<br />
 		</form>
 		<br />
-		<form method="post"	th:action="@{/print}">
+		<form method="post"	th:action="@{/print}" th:object="${loginForm}">
 			<input type="submit" value="年賀状宛名印刷"/>
+			<input type="hidden" th:field="*{userid}"/>
 			年賀状宛名印刷はこちらから	<br />
 		</form>	
 		<br />	

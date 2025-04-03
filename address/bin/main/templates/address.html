@@ -16,7 +16,7 @@
 	<h3 class="addresminititle" th:text="${title}">タイトル</h3>
 	<p  th:if="${complete}"th:text="${complete}"style="color:blue"></p>
 
-
+	<h3>一軒ずつ登録する場合はこちら</h3>
 	<form class="edit" method="POST"
 		th:action="${addressForm.newAddress}? @{/address/insert} : @{/address/update}"
 		th:object="${addressForm}">
@@ -76,8 +76,29 @@
 		</table>
 		<p th:if="${#lists.isEmpty(list)}">登録されている内容はありません。</p>
 	</div>
+	
+<!--	★CSV作成-->
+
+	<h3>CSVで複数登録する場合はこちら</h3>
+	<form method="POST" th:action="@{/address/csvcreit}">
+		<input type="submit" value="CSV保存用フォーム（デスクトップへ保存）">
+	</form>
+	<br />
+<!--	★CSVアップロード-->
+
+	<p>CSVの読み込みは下記のファイル選択をクリック後ファイルを選択し、ファイルをアップロードをクリックしてください。</p>
+	<form method="POST" th:action="@{/address/csvupload}" enctype="multipart/form-data">
+		<input type="file" name="file">	<br />
+	    <input type="submit" name="upload_file" value="ファイルをアップロード">
+	</form>
+	
 	<p th:unless="${addressForm.newAddress}">
 		<a href="#" th:href="@{/address}">住所録編集メニューへもどる</a>
 	</p>
+<!--	 PDF出力ボタン -->
+<!--	<form method="GET" th:action="@{/address/exportpdf}">-->
+<!--	    <input type="submit" value="PDFを出力する">-->
+<!--	</form>-->
+
 </body>
 </html>

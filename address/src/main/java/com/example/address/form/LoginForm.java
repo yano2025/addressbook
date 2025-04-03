@@ -32,4 +32,5 @@ public class LoginForm {
 	private String inputpass;
 	private String newLogin;
 	private Boolean newSelect; 
+	private Integer userid;
 }

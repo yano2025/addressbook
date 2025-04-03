@@ -9,7 +9,7 @@
 
 	<h1>住所録</h1>
 	<h2>宛名印刷一覧</h2>
-	<form method="POST" th:action="@{/login/goselect}">
+	<form method="post" th:action="@{/login/goselect}">
 		<input type="submit" value = "メニュー一覧へもどる">				
 	</form>	<br />
 		<table border="1" th:unless="${#lists.isEmpty(list)}"style="table-layout:fixed;">
@@ -23,9 +23,10 @@
 			</tr>
 			
 			<tr th:each="obj : ${list}"align="center">
-				<td>
-					<form method="POST" th:action="@{/print/print{id}(id=${obj.id})}">
+				<td>			
+					<form method="get" th:action="@{/print/print{id}(id=${obj.id})}" th:object="${loginForm}">
 						<input type="submit" value="印刷">
+						<input type="hidden" th:field="*{userid}"/>
 					</form>
 				</td>
 				<td th:text="${obj.name}"></td>

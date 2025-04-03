@@ -1,5 +1,12 @@
 package com.example.address.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.address.entity.Address;
@@ -119,5 +127,153 @@ public class AddressController {
 		redirectAttributes.addFlashAttribute("delcomplete","削除が完了しました");
 		return "redirect:/address";
 	}
-} 
+	//CSV書き込み用ファイル作成
+	@PostMapping("/csvcreit")
+	public String scvcreit(RedirectAttributes redirectAttributes) {
+		try {
+			// 出力ファイルの作成
+			FileWriter fw = new FileWriter("C:/Users/user/Desktop/Userdata.csv", false);
+			// PrintWriterクラスのオブジェクトを生成
+			PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+			
+			// ヘッダーの指定
+			pw.print("名前＊必須");
+			pw.print(",");
+			pw.print("郵便番号※必須");
+			pw.print(",");
+			pw.print("住所※必須");
+			pw.print(",");
+			pw.print("年齢");
+			pw.print(",");
+			pw.print("備考");
+			pw.println();
+			
+//			// データを書き込む（今後必要なため念のため残す）
+//			for(int i = 0; i < number.length; i++){
+//				pw.print(number[i]);
+//				pw.print(",");
+//				pw.print(userName[i]);
+//				pw.print(",");
+//				pw.print(userSex[i]);
+//				pw.print(",");
+//				pw.print(userDepartment[i]);
+//				pw.print(",");
+//				pw.print(userSalary[i]);
+//				pw.println();
+//			}
+			
+			// ファイルを閉じる
+			pw.close();
+			
+			// 出力確認用のメッセージ
+			redirectAttributes.addFlashAttribute("complete","デスクトップへ出力しました");
+//			System.out.println("csvファイルを出力しました");
+			
+			// 出力に失敗したときの処理
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return"address";
+	}
+//	CSVファイルをアップロードする
+	 @PostMapping("/csvupload")
+	  public String uploadFile(@RequestParam MultipartFile file,
+			AddressForm addressForm,BindingResult bindingResult,
+			Model model,RedirectAttributes redirectAttributes
+			) throws IOException {
+		 
+		 String csvName ="";
+		 Integer csvPostno = 0 ;
+		 String csvAddress = "";
+		 Integer csvAge = 0 ;
+		 String csvText = "";
 
+		 try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))){
+		      String line= br.readLine();
+		      
+		      while ((line = br.readLine()) != null) {
+		    	  String[] split = line.split(",");
+		    	  csvName = String.valueOf(split[0]);
+		    	  csvPostno = Integer.parseInt(split[1]);
+		    	  csvAddress = String.valueOf(split[2]);
+		    	  csvAge = Integer.parseInt(split[3]);
+		    	  csvText = String.valueOf(split[4]);
+		    	  
+		    	  Address address = new Address();
+		    	  AddressForm form = new AddressForm();
+		    	  
+		    	  //SCV→AddressFormへの書き込み
+		    	  addressForm.setName(csvName);
+		    	  addressForm.setPostno(csvPostno);
+		    	  addressForm.setAddress(csvAddress);
+		    	  addressForm.setAge(csvAge);
+		    	  addressForm.setText(csvText);
+		    	  
+		    	  //AddressForm→Addressへの書き込み
+		    	  address.setName(addressForm.getName());
+		    	  address.setPostno(addressForm.getPostno());
+		    	  address.setAddress(addressForm.getAddress());
+		    	  address.setAge(addressForm.getAge());
+		    	  address.setText(addressForm.getText());
+		    	  
+		    	  //バリデーションのため、uploadDateへ移動
+		    	  uploadDate(form, address, bindingResult, model, redirectAttributes);
+		      }
+		      br.close();
+		 }catch(IOException e){
+			 e.printStackTrace();
+		 }
+		 return"redirect:/address";
+	 }
+	
+	 //CSV書き込みバリデーションのための書き込み用クラス
+	 public void uploadDate(@Validated AddressForm addressForm,Address address,BindingResult bindingResult,
+				Model model,RedirectAttributes redirectAttributes
+				) throws IOException {
+		 
+		  if(!bindingResult.hasErrors()) {
+	    	  service.insertAddress(address);
+	    	  redirectAttributes.addFlashAttribute("complete","登録が完了しました");
+	      }else {
+	    	  System.out.println(bindingResult.getAllErrors());
+	    	  showList(addressForm,model);
+	      }
+	 }
+	 
+//
+//	// PDF出力用
+//	 @GetMapping("/exportpdf")
+//	 public void exportToPdf(HttpServletResponse response) throws IOException {
+//	     response.setContentType("application/pdf");
+//	     response.setHeader("Content-Disposition", "attachment; filename=address_list.pdf");
+//
+//	     try (PdfWriter writer = new PdfWriter(response.getOutputStream());
+//	          PdfDocument pdfDoc = new PdfDocument(writer);
+//	          Document document = new Document(pdfDoc)) {
+//
+//	         Iterable<Address> addressList = service.selectAll();
+//
+//	         document.add(new Paragraph("住所録一覧").setFontSize(20).setBold());
+//	         document.add(new Paragraph(""));
+//
+//	         Table table = new Table(new float[]{2, 2, 3, 2, 3});
+//	         table.setWidth(100f); 
+//	         
+//	         table.addHeaderCell("名前");
+//	         table.addHeaderCell("郵便番号");
+//	         table.addHeaderCell("住所");
+//	         table.addHeaderCell("年齢");
+//	         table.addHeaderCell("備考");
+//
+//	         for (Address address : addressList) {
+//	             table.addCell(address.getName());
+//	             table.addCell(address.getPostno().toString());
+//	             table.addCell(address.getAddress());
+//	             table.addCell(address.getAge().toString());
+//	             table.addCell(address.getText());
+//	         }
+//
+//	         document.add(table);
+//	     }
+//	 }
+ }

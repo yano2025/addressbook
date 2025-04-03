@@ -45,21 +45,20 @@ public class LoginController {
 	//ログインIDとパスワードの照合
 	@PostMapping("/logincheck")
 	public String logincheck(LoginForm loginForm,Model model) {
-		
-		//Optional<Login> loginOpt = service.selectOneById(1);
 		Iterable<Login> testIte = service.selectAll();
 		
 		String testName = "";
 		String testPass = "";
+		Integer saveId = 0 ;
 		
 		
 		for (Login i:testIte) {
 			testName= i.getUsername();
 			testPass = i.getPass();
-			//Login usermap = loginOpt.get();
-			//String userid = usermap.getUsername();
-			//String userpass = usermap.getPass();
+			saveId = i.getLoginid();
 			if(testName.equals(loginForm.getInputuser()) && testPass.equals(loginForm.getInputpass())) {
+				//ログインID確認用データ
+				loginForm.setUserid(saveId);
 				return loginOk(loginForm,model);
 			}
 		}
@@ -75,6 +74,8 @@ public class LoginController {
 		Iterable<Login>list = service.selectAll();
 		model.addAttribute("list",list);
 		model.addAttribute("title","メニューを選択してください");
+		//★後で消す
+		//System.out.println(loginForm.getUserid());
 		return "select";
 	}
 	
